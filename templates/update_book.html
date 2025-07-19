@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitabı Düzenle</title>
+</head>
+<body>
+    <h1> {{ book.title }} "adlı kitabı düzenle</h1>
+
+    <form method="post">
+        <label for="title">Yeni Kitap Adı:</label><br>
+        <input type="text" id="title" name="title" value="{{ book.title }}" required><br><br>
+        
+        <label for="author">Yeni Yazar Adı:</label><br>
+        <input type="text" id="author" name="author" value="{{ book.author }}" required><br><br>
+
+        <button type="submit">Güncelle</button>
+    </form>
+</body>
+</html>

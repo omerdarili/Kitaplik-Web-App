@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitap Ekle</title>
+</head>
+<body>
+    <h1>Kitap Ekle</h1>
+    <!-- bu form verileri '/add' adresine POST methodu ile gonderecek-->
+     <form action = "add" method="post">
+        <label for=""title">Kitap Adı:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="author">Yazar:</label><br>
+        <input type="text" id="author" name="author" required><br><br>
+
+        <button type="submit">Kaydet</button>
+     </form>    
+</body>
+</html>

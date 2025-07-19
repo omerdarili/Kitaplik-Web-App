@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 
 app = Flask(__name__)
@@ -40,10 +40,73 @@ class Book(db.Model):
     def __repr__(self):
         return f'<Book {self.title}'
 
+# FLASK ROUTELARI (URL YONETIMI) #
 
-# bu komutlar, yukarida taninlanan python siniflarini okur ve postgresql veritabanina karsilik
-# gelen tablolari olusturur
-with app.app_context():
-    print("Veritabani tablolari olusturuluyor...")
-    db.create_all()
-    print("Tablolar basariyla olusturuldu.")       
+@app.route('/')
+def home():
+    # veritabanından tüm kitapları cekiyoruz
+    book_list = Book.query.all()
+    # bu listeyi 'index.html' dosyasina 'books' adıyla gonderiyoruz
+    return render_template('index.html', books=book_list)
+
+@app.route('/add', methods=['GET', 'POST'])
+def add_book():
+    # eger form gonderildi yani metot POST ise
+    if request.method == 'POST':
+        # formdan gelen title ve auther verilerini alıyoruz
+        title = request.form['title']
+        author = request.form['author']
+         
+        new_book = Book(title=title, author=author, user_id=1)
+
+        # yeni kitap nesnesini veritabanı oturumuna ekliyoruz
+        db.sessions.add(new_book)
+        # degisiklikleri veritabanına kalıcı olarak isliyoruz
+        db.session.commit()
+
+        # islem bittikten sonra kullanıcıyı ana sayfaya yönlendiriyoruz
+        return redirect(url_for('home'))
+    
+    # sadece ziyaret edildiyse (yani metot GET ise)
+    # kullanıcıya yeni kiap ekleme formunu gosteriyoruz
+    return render_template('add_book.html')
+
+@app.route('/delete/<int:book_id>')
+def delete_book(book_id):
+    # silinecek kitabi id sine gore veritabanından buluyoruz
+    # .get_or_400() metoduo id de kitap yoksa 404 hatası verir
+    book_to_delete = Book.query.get_or_404(book_id)
+
+    # kitabi veritabanindan siliyoruz
+    db.session.delete(book_to_delete)
+    # degisikilkleri kalici hale getiriyoruz
+    db.session.commit()
+
+    # kullanıcıyı ana sayfaya yonlendirme
+    return redirect(url_for('home'))
+
+@app.route('/update/<int:book_id>', methods=['GET', 'POST'])
+def update_book(book_id):
+    # güncellenecek kitabı veritabanindan buluyoruz, get ve post için gerekli
+    book_to_update = Book.query.get_or_404(book_id)
+
+    # eger istek post ise, yani kullanici formu doldurup guncelle dediyse
+    if request.method == 'POST':
+        # formdan gelen yeni bilgileri aliyoruz
+        new_title = request.form['title']
+        new_author = request.form['author']
+
+        # buldugumuz kitabin özelligini güncelliyourz
+        # ORM -> sql yazmiyoruz
+        book_to_update.title = new_title
+        book_to_update.author = new_author
+
+        db.session.commit()
+
+        return redirect(url_for('home'))
+    
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+    

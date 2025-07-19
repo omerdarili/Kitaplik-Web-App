@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitaplığım</title>
+</head>
+<body>
+    <h1>Kitap Listem</h1>
+    
+    <!-- Yeni kitap ekleme sayfasina giden bir link  -->
+     <a href="{{ url_for('add_book') }}">Yeni Kitap Ekle</a>
+
+     <hr>
+
+     <ul>
+        <!-- flaskten gelen 'books' listesindeki her bir book icin dongu baslat-->
+        {% for book in books %}
+        <li>
+            <strong>{{book.title}}</strong> - <em>{{ book.author}}</em>
+
+            <a href="{{url_for('update_book', book_id=book.id)}}">Düzenle</a>
+
+            <a href="{{url_for('delete_book', book_id=book.id)}}">Sil</a>
+        </li>
+        {% else %}
+        <li>Henüz hiç kitap eklenmemiş.</li>
+        {% endfor %}
+
+    </ul>
+</body>
+</html>
