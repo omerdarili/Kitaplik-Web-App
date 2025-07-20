@@ -4,7 +4,7 @@ Bu proje, kullanıcıların güvenli bir şekilde kayıt olup giriş yapabildiğ
 
 ### ✨ Uygulama Demosu
 
-![Uygulama Demosu](![Image](https://github.com/user-attachments/assets/9dfb3372-e0e5-477a-b56a-f6bf8acec207))
+![Uygulama Demosu](https://github.com/user-attachments/assets/9dfb3372-e0e5-477a-b56a-f6bf8acec207))
 
 ---
 
