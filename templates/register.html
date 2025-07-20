@@ -3,29 +3,25 @@
 {% block title %}Kayıt Ol{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title text-center">Yeni Hesap Oluştur</h3>
-            </div>
-            <div class="card-body">
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card card-glass">
+            <div class="card-body p-5">
+                <h3 class="card-title text-center mb-4">Yeni Hesap Oluştur</h3>
                 <form method="post">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Kullanıcı Adı</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Kullanıcı Adı" required>
+                        <label for="username">Kullanıcı Adı</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Şifre</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Şifre" required>
+                        <label for="password">Şifre</label>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-success">Kayıt Ol</button>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-gradient btn-lg">Kayıt Ol</button>
                     </div>
                 </form>
-            </div>
-            <div class="card-footer text-center">
-                <p class="mb-0">Zaten bir hesabın var mı? <a href="{{ url_for('login') }}">Giriş Yap</a></p>
+                <p class="text-center text-white-50 mt-4 mb-0">Zaten bir hesabın var mı? <a href="{{ url_for('login') }}">Giriş Yap</a></p>
             </div>
         </div>
     </div>
