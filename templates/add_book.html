@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Kitap Ekle</title>
-</head>
-<body>
-    <h1>Kitap Ekle</h1>
-    <!-- bu form verileri '/add' adresine POST methodu ile gonderecek-->
-     <form action = "add" method="post">
-        <label for=""title">Kitap Adı:</label><br>
-        <input type="text" id="title" name="title" required><br><br>
+{% extends "base.html" %}
 
-        <label for="author">Yazar:</label><br>
-        <input type="text" id="author" name="author" required><br><br>
+{% block title %}Yeni Kitap Ekle{% endblock %}
 
-        <button type="submit">Kaydet</button>
-     </form>    
-</body>
-</html>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Yeni Kitap Ekle</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Kitap Adı</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Yazar</label>
+                        <input type="text" class="form-control" id="author" name="author" required>
+                    </div>
+                    <a href="{{ url_for('home') }}" class="btn btn-secondary">İptal</a>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

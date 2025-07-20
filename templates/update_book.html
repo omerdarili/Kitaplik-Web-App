@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Kitabı Düzenle</title>
-</head>
-<body>
-    <h1> {{ book.title }} "adlı kitabı düzenle</h1>
+{% extends "base.html" %}
 
-    <form method="post">
-        <label for="title">Yeni Kitap Adı:</label><br>
-        <input type="text" id="title" name="title" value="{{ book.title }}" required><br><br>
-        
-        <label for="author">Yeni Yazar Adı:</label><br>
-        <input type="text" id="author" name="author" value="{{ book.author }}" required><br><br>
+{% block title %}Kitabı Düzenle{% endblock %}
 
-        <button type="submit">Güncelle</button>
-    </form>
-</body>
-</html>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">"{{ book.title }}" Adlı Kitabı Düzenle</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Yeni Kitap Adı</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ book.title }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Yeni Yazar Adı</label>
+                        <input type="text" class="form-control" id="author" name="author" value="{{ book.author }}" required>
+                    </div>
+                    <a href="{{ url_for('home') }}" class="btn btn-secondary">İptal</a>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

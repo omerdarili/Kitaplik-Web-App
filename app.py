@@ -101,7 +101,10 @@ def login():
         user = User.query.filter_by(username=request.form['username']).first()
         if user and user.check_password(request.form['password']):
             login_user(user)
+            flash('Başarıyla giriş yaptınız!')
             return redirect(url_for('home'))
+        else:
+            flash('Hatalı kullanıcı adı veya şifre.', 'danger')
         flash('Hatalı kullanıcı adı veya şifre!')
     return render_template('login.html')    
 
@@ -118,13 +121,14 @@ def register():
         password = request.form['password']
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            flash('Bu kullanıcı adı zaten alınmış.')
+            flash('Bu kullanıcı adı zaten alınmış.', 'warning')
             return redirect(url_for('register'))
         
         new_user = User(username=username)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
+        flash('Hesabınız başarıyla oluşturuldu! Lütfen giriş yapın.', 'success')
         return redirect(url_for('login'))
     return render_template('register.html')
              
@@ -142,6 +146,7 @@ def add_book():
         db.session.add(new_book)
         # degisiklikleri veritabanına kalıcı olarak isliyoruz
         db.session.commit()
+        flash(f"'{new_book.title}' başarıyla eklendi!", 'success')
 
         # islem bittikten sonra kullanıcıyı ana sayfaya yönlendiriyoruz
         return redirect(url_for('home'))
@@ -163,6 +168,7 @@ def delete_book(book_id):
     db.session.delete(book_to_delete)
     # degisikilkleri kalici hale getiriyoruz
     db.session.commit()
+    flash(f"'{title}' başarıyla silindi.", 'info') 
 
     # kullanıcıyı ana sayfaya yonlendirme
     return redirect(url_for('home'))
@@ -183,6 +189,7 @@ def update_book(book_id):
         book_to_update.author = request.form['author']
 
         db.session.commit()
+        flash(f"'{book_to_update.title}' başarıyla güncellendi!", 'success')
 
         return redirect(url_for('home'))
     return render_template('update_book.html', book=book_to_update)
